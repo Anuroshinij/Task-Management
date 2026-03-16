@@ -1,0 +1,21 @@
+# React
+node_modules/
+build/
+dist/
+
+# Spring Boot
+target/
+*.class
+*.jar
+*.log
+
+# Environment files
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
