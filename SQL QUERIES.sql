@@ -30,3 +30,4 @@ CREATE TABLE tasks (
 
 use task_management;
 show tables;
+
