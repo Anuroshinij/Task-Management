@@ -5,12 +5,16 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.util.JwtUtil;
 
 @Service
-public class AuthServiceImpl implements AuthService  {
+public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public User register(User user) {
@@ -21,22 +25,20 @@ public class AuthServiceImpl implements AuthService  {
                 });
 
         return userRepository.save(user);
-        
+
     }
 
     @Override
-    public User login(String email, String password) {
+    public String login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if(!user.getPassword().equals(password))
-        {
-            throw new RuntimeException("Invalid Password");
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid password");
         }
 
-        return user;
-        
+        return jwtUtil.generateToken(email);
     }
 
 }
